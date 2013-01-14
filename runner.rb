@@ -10,6 +10,8 @@
 # 99.9, 99 and 50 percentile transaction times
 ##
 
+require 'lib/prereqs.rb'
+
 ##
 # Pull in command line switches
 #
