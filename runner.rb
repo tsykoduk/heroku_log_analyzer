@@ -15,8 +15,9 @@ require 'lib/prereqs.rb'
 ##
 # Pull in command line switches
 #
-
-
+app = "App_Name"
+time = 30 #minutes
+sudo = true
 #
 ##
 
