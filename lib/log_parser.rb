@@ -30,3 +30,9 @@ heroku_errors.each { |e|
   puts e + `grep #{e} #{file_name} |wc -l`
   }
   
+def percentile_of(list_of_numbers[], type=99.9)
+  
+  #do magic mathy stuff here
+  
+end
+  
