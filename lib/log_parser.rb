@@ -42,7 +42,7 @@ heroku_errors.each { |e|
   puts e + `grep #{e} #{file_name} |wc -l`
   }
   
-def percentile_of(list_of_numbers[], type=99.9)
+def percentile_of(list_of_numbers, type=99.9)
   
   list_of_numbers.sort!
   p = (type/100)
