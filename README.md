@@ -1,4 +1,6 @@
 heroku_log_analyzer
 ===================
 
-analyze your heroku logs
+analyze your heroku logs.
+
+Currently, you need to edit the runner.rb file to reference the log file that you want to pull from. 
