@@ -45,17 +45,31 @@ def log_parser(file,percentile_targets)
   puts "=-=-=-=-=-=-=-=-=-="
   generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
   puts
+  
+  #get the queue times out of the logs
+  #not really useful yet for ruby apps
+
+  `awk '{for(i=1;i<=NF;i++){if($i~/^queue=/){print $i}}}' #{file} > #{file}_w1`
+  `tr '=' ',' <#{file}_w1 > #{file}_w2`
+  `tr 'ms' ',ms' <#{file}_w2 > #{file}_queuetimes.csv`
+  `rm #{file}_w1 #{file}_w2`
+  puts
+  puts "Queue Times"
+  puts "=-=-=-=-=-=-=-=-=-="
+  generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
+  puts
 
   # Count the number of H12's, H13's
   
   heroku_errors = ["H10","H11","H12", "H13","H18","H19","H20","R10","R12","R14","R15"]
   heroku_error_results = []
+  total_log_lines = `cat #{file} | wc -l`
   puts
   puts "Heroku Errors"
-  puts "=-=-=-=-=-=-=-=-=-="
+  puts "=-=-=-=-=-=-=-=-=-=" 
   heroku_errors.each { |e|
-    heroku_error_results = `grep #{e} #{file} |wc -l`
-    puts e + `grep code=#{e} #{file} |wc -l`
+    heroku_error_results = `grep code=#{e} #{file} |wc -l`
+    printf e + "\t" + heroku_error_results.to_i.to_s + "\t" + ((heroku_error_results.to_f/total_log_lines.to_f)*100).to_i.to_s + "%\n"
   }
 end
   
