@@ -18,7 +18,7 @@ require './lib/prereqs.rb'
 app = "App_Name"
 time = 30 #minutes
 sudo = true
-file_name = "123"
+file_name = "./logs/realplayer.log"
 percentile_targets = [0.999, 0.99,0.95,0.90,0.75,0.50,0.25,0.10,0.05,0.01,0.001]
 #
 ##

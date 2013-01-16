@@ -55,7 +55,7 @@ def log_parser(file,percentile_targets)
   puts "=-=-=-=-=-=-=-=-=-="
   heroku_errors.each { |e|
     heroku_error_results = `grep #{e} #{file} |wc -l`
-    puts e + `grep #{e} #{file} |wc -l`
+    puts e + `grep code=#{e} #{file} |wc -l`
   }
 end
   
