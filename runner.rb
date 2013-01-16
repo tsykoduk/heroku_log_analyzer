@@ -10,7 +10,7 @@
 # 99.9, 99 and 50 percentile transaction times
 ##
 
-require 'lib/prereqs.rb'
+require './lib/prereqs.rb'
 
 ##
 # Pull in command line switches
@@ -18,8 +18,11 @@ require 'lib/prereqs.rb'
 app = "App_Name"
 time = 30 #minutes
 sudo = true
+file_name = "123"
+percentile_targets = [0.999, 0.99,0.95,0.90,0.75,0.50,0.25,0.10,0.05,0.01,0.001]
 #
 ##
 
 ##
-# Build out a log run f 
+# Build out a log run
+log_parser(file_name,percentile_targets)
