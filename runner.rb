@@ -20,6 +20,7 @@ percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.0
 app = "ttm-production"
 time = 1 #minutes
 sudo = true
+screen = true
 
 ##
 # Generate a log file
@@ -30,4 +31,11 @@ file_name = log_pull(sudo, app, time)
 ##
 # Build out a log run
 #
-log_parser(file_name,percentile_targets, time)
+report = log_parser(file_name,percentile_targets, time)
+
+if screen
+  printf report
+else
+  #create a text file with the report in it
+end
+

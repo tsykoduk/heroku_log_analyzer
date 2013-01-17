@@ -69,5 +69,7 @@ def log_parser(file,percentile_targets,time)
   #clean up the work directory
   `rm ./logs/*.csv`
   
+  return report
+
 end
   
