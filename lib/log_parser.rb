@@ -65,5 +65,9 @@ def log_parser(file,percentile_targets)
     heroku_error_results = `grep code=#{e} #{file} |wc -l`
     printf e + "\t" + heroku_error_results.to_i.to_s + "\t" + ((heroku_error_results.to_f/total_log_lines.to_f)*100).to_i.to_s + "%\n"
   }
+  
+  #clean up the work directory
+  `rm ./logs/*.csv`
+  
 end
   
