@@ -11,7 +11,7 @@ def generate_list_of_times(file,percentile_targets)
     printf "Std Dev" + "\t" + standard_dev(list_of_times).to_i.to_s + "\n"
 end
 
-def log_parser(file,percentile_targets)
+def log_parser(file,percentile_targets,time)
   puts
 
   #Get the service times out of the raw logs
@@ -20,7 +20,7 @@ def log_parser(file,percentile_targets)
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_servicetimes.csv`
   `rm #{file}_s1 #{file}_s2`
   puts
-  puts `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured"
+  puts `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + "in " + time.to_s + " minutes"
   puts
   puts "Service Times "
   puts "=-=-=-=-=-=-=-=-=-="
