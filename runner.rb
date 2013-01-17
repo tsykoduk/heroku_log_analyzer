@@ -29,12 +29,13 @@ puts "starting run"
 ##
 puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
 file_name = log_pull(sudo, app, time)
+report = "Preformance Report for " + app + "\nGenerated on" + Time.now() + "\n"
 
 ##
 # Build out a log run
 #
 puts "building out the report"
-report = log_parser(file_name,percentile_targets, time)
+report << log_parser(file_name,percentile_targets, time)
 
 if screen
   printf report
