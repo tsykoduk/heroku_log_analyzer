@@ -20,7 +20,7 @@ def log_parser(file,percentile_targets,time)
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_servicetimes.csv`
   `rm #{file}_s1 #{file}_s2`
   puts
-  puts `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + "in " + time.to_s + " minutes"
+  puts `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes"
   puts
   puts "Service Times "
   puts "=-=-=-=-=-=-=-=-=-="
