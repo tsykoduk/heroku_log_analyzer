@@ -1,6 +1,4 @@
 def log_pull(sudo, app, time)
-  # Log Puller
-
   file_name = "./work/" + app + "." + Time.now().to_i.to_s + ".log"
   if sudo
     runner_string = "heroku sudo "
@@ -17,8 +15,6 @@ def log_pull(sudo, app, time)
     timeout = "timeout"
   end
   
-  #do the work
-
   `#{timeout} #{time}m #{runner_string}`
   return file_name
 end

@@ -13,39 +13,32 @@ def generate_list_of_times(file,percentile_targets)
   return report
 end
 
-def log_parser(file,percentile_targets,time)
-  #Get the service times out of the raw logs
-  `awk '{for(i=1;i<=NF;i++){if($i~/^service=/){print $i}}}' #{file} > #{file}_s1`
+def log_processor(file, type)
+  `awk '{for(i=1;i<=NF;i++){if($i~/^#{type}=/){print $i}}}' #{file} > #{file}_s1`
   `tr '=' ',' <#{file}_s1 > #{file}_s2`
-  `tr 'ms' ',ms'<#{file}_s2 > #{file}_servicetimes.csv`
+  `tr 'ms' ',ms'<#{file}_s2 > #{file}_#{type}times.csv`
   `rm #{file}_s1 #{file}_s2`
+end
+  
+
+def log_parser(file,percentile_targets,time)
+  
+  log_processor(file, "service")
   report =  `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes\n"
   report << "\n"
   report <<  "Service Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
   report << "\n"
-
-
-  #get the wait times out of the logs
-
-  `awk '{for(i=1;i<=NF;i++){if($i~/^wait=/){print $i}}}' #{file} > #{file}_w1`
-  `tr '=' ',' <#{file}_w1 > #{file}_w2`
-  `tr 'ms' ',ms' <#{file}_w2 > #{file}_waittimes.csv`
-  `rm #{file}_w1 #{file}_w2`
+  
+  log_processor(file, "wait")
   report << "\n"
   report <<  "Wait Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
   report << "\n"
-  
-  #get the queue times out of the logs
-  #not really useful yet for ruby apps
 
-  `awk '{for(i=1;i<=NF;i++){if($i~/^queue=/){print $i}}}' #{file} > #{file}_w1`
-  `tr '=' ',' <#{file}_w1 > #{file}_w2`
-  `tr 'ms' ',ms' <#{file}_w2 > #{file}_queuetimes.csv`
-  `rm #{file}_w1 #{file}_w2`
+  log_processor(file, "queue")
   report << "\n"
   report <<  "Queue Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
@@ -66,7 +59,7 @@ def log_parser(file,percentile_targets,time)
   }
   
   #clean up the work directory
-  `rm ./logs/*.csv`
+  `rm ./work/*.csv`
   
   return report
 
