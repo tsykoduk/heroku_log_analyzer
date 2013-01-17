@@ -17,9 +17,10 @@ percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.0
 # Pull in command line switches
 #
 app = "ttm-production"
-time = 5 #minutes
+time = 1 #minutes
 sudo = true
 #file_name = "./logs/ttm.logs"
+
 
 ##
 # Generate a log file
