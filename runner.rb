@@ -17,17 +17,18 @@ require './lib/prereqs.rb'
 # Pull in command line switches
 #
 percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.010,0.001]
-app = "ttm-production"
-time = 1 #minutes
+app = "realplayer"
+time = 10 #minutes
 sudo = true
 screen = false
-
-puts "starting run"
+puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
+puts "press any key to start"
+gets
 
 ##
 # Generate a log file
 ##
-puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
+puts "starting run"
 file_name = log_pull(sudo, app, time)
 report = "Preformance Report for " + app + "\nGenerated on" + Time.now() + "\n"
 
