@@ -1,11 +1,3 @@
-
-def percentile_of(list_of_numbers, type)
-  list_of_numbers.sort!.reverse!
-  p = type*list_of_numbers.count
-  return list_of_numbers[p]
-  
-end
-
 def generate_list_of_times(file,percentile_targets)
   list_of_times = []
   time_file = CSV.read(file)
@@ -28,7 +20,9 @@ def log_parser(file,percentile_targets)
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_servicetimes.csv`
   `rm #{file}_s1 #{file}_s2`
   puts
-  puts "Service Times"
+  puts `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured"
+  puts
+  puts "Service Times "
   puts "=-=-=-=-=-=-=-=-=-="
   generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
   puts

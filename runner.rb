@@ -11,6 +11,7 @@
 ##
 
 require './lib/prereqs.rb'
+percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.010,0.001]
 
 ##
 # Pull in command line switches
@@ -18,11 +19,15 @@ require './lib/prereqs.rb'
 app = "App_Name"
 time = 30 #minutes
 sudo = true
-file_name = "./logs/ttm.logs"
-percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.010,0.001]
-#
+#file_name = "./logs/ttm.logs"
+
 ##
+# Generate a log file
+##
+
+#file_name = log_pull(sudo, app, time)
 
 ##
 # Build out a log run
+#
 log_parser(file_name,percentile_targets)

@@ -11,3 +11,10 @@ end
 def standard_dev(num)
   return Math.sqrt(sample_var(num))
 end
+
+def percentile_of(list_of_numbers, type)
+  list_of_numbers.sort!.reverse!
+  p = type*list_of_numbers.count
+  return list_of_numbers[p]
+  
+end
