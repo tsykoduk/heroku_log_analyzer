@@ -4,3 +4,4 @@
 require 'csv'
 require './lib/maths.rb'
 require './lib/log_parser.rb'
+require './lib/log_puller.rb'
