@@ -23,13 +23,11 @@ sudo = true
 screen = false
 
 puts "starting run"
-puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
 
 ##
 # Generate a log file
 ##
-
-puts "starting to pull the log files"
+puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
 file_name = log_pull(sudo, app, time)
 
 ##
@@ -47,4 +45,3 @@ else
   end
   puts "you should find it in a file called " + file_name + ".report"
 end
-
