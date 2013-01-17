@@ -20,22 +20,31 @@ percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.0
 app = "ttm-production"
 time = 1 #minutes
 sudo = true
-screen = true
+screen = false
+
+puts "starting run"
+puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
 
 ##
 # Generate a log file
 ##
 
+puts "starting to pull the log files"
 file_name = log_pull(sudo, app, time)
 
 ##
 # Build out a log run
 #
+puts "building out the report"
 report = log_parser(file_name,percentile_targets, time)
 
 if screen
   printf report
 else
-  #create a text file with the report in it
+  puts "Generating the report"
+  File.open(file_name + ".report", 'w') do |f|
+      f << report
+  end
+  puts "you should find it in a file called " + file_name + ".report"
 end
 

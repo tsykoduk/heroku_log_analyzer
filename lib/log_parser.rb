@@ -2,29 +2,28 @@ def generate_list_of_times(file,percentile_targets)
   list_of_times = []
   time_file = CSV.read(file)
   time_file.each {|row| list_of_times << row[1].to_i}
+  report = ""
   percentile_targets.each { |p|
-    report <<  p.to_s + "\t" + percentile_of(list_of_times, p).to_s + "\n"
+    report << p.to_s + "\t" + percentile_of(list_of_times, p).to_s + "\n"
     }
-    report <<  "Max" + "\t" + list_of_times.first.to_s + "\n"
-    report <<  "Min" + "\t" + list_of_times.last.to_s + "\n"
-    report <<  "Mean" + "\t" + mean(list_of_times).to_i.to_s + "\n"
-    report <<  "Std Dev" + "\t" + standard_dev(list_of_times).to_i.to_s + "\n"
+  report <<  "Max" + "\t" + list_of_times.first.to_s + "\n"
+  report <<  "Min" + "\t" + list_of_times.last.to_s + "\n"
+  report <<  "Mean" + "\t" + mean(list_of_times).to_i.to_s + "\n"
+  report <<  "Std Dev" + "\t" + standard_dev(list_of_times).to_i.to_s + "\n"
+  return report
 end
 
 def log_parser(file,percentile_targets,time)
-  report << 
-
   #Get the service times out of the raw logs
   `awk '{for(i=1;i<=NF;i++){if($i~/^service=/){print $i}}}' #{file} > #{file}_s1`
   `tr '=' ',' <#{file}_s1 > #{file}_s2`
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_servicetimes.csv`
   `rm #{file}_s1 #{file}_s2`
-  report << "\n"
-  report <<  `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes\n"
+  report =  `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes\n"
   report << "\n"
   report <<  "Service Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
+  report << generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
   report << "\n"
 
 
@@ -37,7 +36,7 @@ def log_parser(file,percentile_targets,time)
   report << "\n"
   report <<  "Wait Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
+  report << generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
   report << "\n"
   
   #get the queue times out of the logs
@@ -50,7 +49,7 @@ def log_parser(file,percentile_targets,time)
   report << "\n"
   report <<  "Queue Times\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
+  report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
   report << "\n"
 
   # Count the number of H12's, H13's

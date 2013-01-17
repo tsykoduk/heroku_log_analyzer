@@ -18,6 +18,7 @@ def log_pull(sudo, app, time)
   end
   
   #do the work
+
   `#{timeout} #{time}m #{runner_string}`
   return file_name
 end
