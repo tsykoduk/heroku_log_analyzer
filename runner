@@ -12,19 +12,11 @@
 
 require './lib/prereqs.rb'
 
-
 ##
 # Pull in command line switches
-#
-# Switches
-# -h --help Display this help
-# -s --sudo Run with sudo. Requires the sudo plugin
-# -f --screen Display to the screen
-# -a --app App Name to pull logs for
-# -t Number --time Number of minutes to pull logs for
 ##
 
- opts = Trollop::options do
+opts = Trollop::options do
   banner 'Pull and get stats from Heroku logs
   
   Usage:
@@ -35,9 +27,8 @@ require './lib/prereqs.rb'
   opt :screen, "Display to the screen. (Default: False)", :default => false, :short => "f"
   opt :app, "App Name to pull logs for.", :type => String
   opt :time, "Number of minutes to pull logs for.", :default => 5
+  opt :log_file, "optional log file to proccess by hand", :type => String
 end
-
-Trollop::die :app, "must exist" if opts[:app].nil?
 
 ##
 # Settings
@@ -48,17 +39,38 @@ app = opts.app
 time = opts.time.to_i
 sudo = opts.sudo
 screen = opts.screen
+log_file = opts.log_file
 
 
-puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
-#puts "press return to start"
-#gets
+# check that we have a good app name and that we have access to it
+Trollop::die :app, "must exist" if app.nil?
 
+if log_file.nil?
+  if sudo
+    runner_string = "heroku sudo "
+  else
+    runner_string = "heroku "
+  end
+
+  `#{runner_string} info -a #{app} &> /dev/null`
+
+  if $?.exitstatus == 1
+    Trollop::die :app, "Appname is incorrect or you do not have access to it" 
+  end
+
+  puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
+end
 ##
 # Generate a log file
 ##
-puts "starting run"
-file_name = log_pull(sudo, app, time)
+
+if log_file.nil? 
+  puts "starting run"
+  file_name = log_pull(sudo, app, time)
+else
+  file_name = log_file
+end  
+  
 report = "Preformance Report for " + app + "\nGenerated on " + Time.now().to_s + "\n"
 
 ##

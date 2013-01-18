@@ -25,8 +25,7 @@ def clean_up(file, types)
     `rm #{file}_#{type}times.csv`
     }
 end
-  
-
+ 
 def log_parser(file,percentile_targets,time)
   
   log_processor(file, "service")
@@ -68,4 +67,3 @@ def log_parser(file,percentile_targets,time)
   return report
 
 end
-  

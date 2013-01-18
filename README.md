@@ -16,4 +16,5 @@ Pull and get stats from Heroku logs
      --app, -a <s>:   App Name to pull logs for.
     --time, -t <i>:   Number of minutes to pull logs for. (Default: 5)
         --help, -h:   Show this message
+         --log, -l:   Pass it a logfile already pulled to run stats on
 
