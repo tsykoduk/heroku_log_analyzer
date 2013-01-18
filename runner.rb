@@ -31,12 +31,13 @@ require './lib/prereqs.rb'
     runner [options]
     where [options] are:'
 
-  opt :sudo, "Run with sudo. Requires the sudo plugin. Defaults to False.", :default => false
-  opt :screen, "Display to the screen. Defaults to False.", :default => false, :short => "f"
+  opt :sudo, "Run with sudo. Requires the sudo plugin. (Default: False)", :default => false
+  opt :screen, "Display to the screen. (Default: False)", :default => false, :short => "f"
   opt :app, "App Name to pull logs for.", :type => String
   opt :time, "Number of minutes to pull logs for.", :default => 5
 end
 
+Trollop::die :app, "must exist" if opts[:app].nil?
 
 ##
 # Settings
