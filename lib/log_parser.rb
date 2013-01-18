@@ -19,8 +19,11 @@ def log_processor(file, type)
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_#{type}times.csv`
 end
 
-def clean_up(file, type)
-  `rm #{file}_s1 #{file}_s2 #{file}_#{type}times.csv`
+def clean_up(file, types)
+  `rm #{file}_s1 #{file}_s2`
+  types.each { |type|
+    `rm #{file}_#{type}times.csv`
+    }
 end
   
 
@@ -33,8 +36,6 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
   report << "\n"
-  clean_up(file, "service")
-  
   
   log_processor(file, "wait")
   report << "\n"
@@ -42,7 +43,6 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
   report << "\n"
-  clean_up(file, "wait")  
 
   log_processor(file, "queue")
   report << "\n"
@@ -50,7 +50,7 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
   report << "\n"
-  clean_up(file, "queue")
+  clean_up(file, ["queue", "service", "wait"]) 
 
   # Count the number of H12's, H13's
   
