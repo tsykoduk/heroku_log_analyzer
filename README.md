@@ -4,7 +4,7 @@ heroku log analyzer
 Depends on:
 
 * Heroku toolbelt.
-* GNU/Timeout - on OSX do brew install coreutils 
+* GNU/Timeout - on OSX do ``brew install coreutils``. Linux should have it.
 
 Pull and get stats from Heroku logs
   
