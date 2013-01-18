@@ -17,7 +17,10 @@ def log_processor(file, type)
   `awk '{for(i=1;i<=NF;i++){if($i~/^#{type}=/){print $i}}}' #{file} > #{file}_s1`
   `tr '=' ',' <#{file}_s1 > #{file}_s2`
   `tr 'ms' ',ms'<#{file}_s2 > #{file}_#{type}times.csv`
-  `rm #{file}_s1 #{file}_s2`
+end
+
+def clean_up(file, type)
+  `rm #{file}_s1 #{file}_s2 #{file}_#{type}times.csv`
 end
   
 
@@ -30,6 +33,8 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
   report << "\n"
+  clean_up(file, "service")
+  
   
   log_processor(file, "wait")
   report << "\n"
@@ -37,6 +42,7 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
   report << "\n"
+  clean_up(file, "wait")  
 
   log_processor(file, "queue")
   report << "\n"
@@ -44,6 +50,7 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
   report << "\n"
+  clean_up(file, "queue")
 
   # Count the number of H12's, H13's
   
@@ -57,9 +64,6 @@ def log_parser(file,percentile_targets,time)
     heroku_error_results = `grep code=#{e} #{file} |wc -l`
     report <<  e + "\t" + heroku_error_results.to_i.to_s + "\t" + ((heroku_error_results.to_f/total_log_lines.to_f)*100).to_i.to_s + "%\n"
   }
-  
-  #clean up the work directory
-  `rm ./work/*.csv`
   
   return report
 
