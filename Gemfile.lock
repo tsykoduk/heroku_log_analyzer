@@ -1,9 +1,9 @@
 GEM
   specs:
-    clamp (0.5.0)
+    trollop (2.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  clamp
+  trollop

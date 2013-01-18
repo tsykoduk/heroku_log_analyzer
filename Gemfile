@@ -1,1 +1,2 @@
-gem 'clamp'
+source 'https://rubygems.org'
+gem 'trollop'

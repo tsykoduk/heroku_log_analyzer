@@ -12,6 +12,7 @@
 
 require './lib/prereqs.rb'
 
+
 ##
 # Pull in command line switches
 #
@@ -20,14 +21,34 @@ require './lib/prereqs.rb'
 # -s --sudo Run with sudo. Requires the sudo plugin
 # -f --screen Display to the screen
 # -a --app App Name to pull logs for
-# -t Number --time Number Number of minutes to pull logs for
+# -t Number --time Number of minutes to pull logs for
+##
+
+ opts = Trollop::options do
+  banner 'Pull and get stats from Heroku logs
+  
+  Usage:
+    runner [options]
+    where [options] are:'
+
+  opt :sudo, "Run with sudo. Requires the sudo plugin. Defaults to False.", :default => false
+  opt :screen, "Display to the screen. Defaults to False.", :default => false, :short => "f"
+  opt :app, "App Name to pull logs for.", :type => String
+  opt :time, "Number of minutes to pull logs for.", :default => 5
+end
+
+
+##
+# Settings
 ##
 
 percentile_targets = [0.999, 0.990,0.950,0.900,0.750,0.500,0.250,0.100,0.050,0.010,0.001]
-app = "realplayer"
-time = 1 #minutes
-sudo = true
-screen = false
+app = opts.app
+time = opts.time.to_i
+sudo = opts.sudo
+screen = opts.screen
+
+
 puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
 puts "press return to start"
 gets
