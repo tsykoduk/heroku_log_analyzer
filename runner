@@ -51,8 +51,8 @@ screen = opts.screen
 
 
 puts "grabbing " + time.to_s + " minutes of logs from the app called " + app
-puts "press return to start"
-gets
+#puts "press return to start"
+#gets
 
 ##
 # Generate a log file
