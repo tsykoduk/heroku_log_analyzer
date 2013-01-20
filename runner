@@ -86,7 +86,7 @@ if screen
   printf report
 else
   puts "generating the report"
-  File.open(file_name + ".report", 'w') do |f|
+  File.open(file_name + ".report.txt", 'w') do |f|
       f << report
   end
   puts "you should find it in a file called " + file_name + ".report"
