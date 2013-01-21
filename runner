@@ -89,5 +89,5 @@ else
   File.open(file_name + ".report.txt", 'w') do |f|
       f << report
   end
-  puts "you should find it in a file called " + file_name + ".report"
+  puts "you should find it in a file called " + file_name + ".report.txt"
 end
