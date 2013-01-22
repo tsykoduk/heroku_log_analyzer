@@ -49,7 +49,15 @@ def log_parser(file,percentile_targets,time)
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
   report << "\n"
-  clean_up(file, ["queue", "service", "wait"]) 
+
+  log_processor(file, "connect")
+  report << "\n"
+  report <<  "Connect Times\n"
+  report <<  "=-=-=-=-=-=-=-=-=-=\n"
+  report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
+  report << "\n"
+  
+  clean_up(file, ["queue", "service", "wait", "connect"]) 
 
   # Count the number of H12's, H13's
   
