@@ -5,6 +5,8 @@ Depends on:
 
 * Heroku toolbelt.
 * GNU/Timeout - on OSX do ``brew install coreutils``. Linux should have it.
+* Run bundle install in it's directory and it will grab the gems that it requires
+* Tested on OSX with Ruby 1.9.3
 
 Pull and get stats from Heroku logs
   
@@ -17,4 +19,3 @@ Pull and get stats from Heroku logs
     --time, -t <i>:   Number of minutes to pull logs for. (Default: 5)
         --help, -h:   Show this message
          --log, -l:   Pass it a logfile already pulled to run stats on
-
