@@ -42,8 +42,7 @@ screen = opts.screen
 log_file = opts.log_file
 
 
-# check that we have a good app name and that we have access to it
-Trollop::die :app, "must exist" if app.nil?
+
 
 if log_file.nil?
   if sudo
@@ -51,6 +50,9 @@ if log_file.nil?
   else
     runner_string = "heroku "
   end
+
+  # check that we have a good app name and that we have access to it
+  Trollop::die :app, "must exist" if app.nil?
 
   `#{runner_string} info -a #{app} &> /dev/null`
 
