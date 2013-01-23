@@ -25,39 +25,31 @@ def clean_up(file, types)
     `rm #{file}_#{type}times.csv`
     }
 end
+
+def report_generator(file, type,percentile_targets)
+  report = "\n"
+  report <<  "#{type} times\n"
+  report <<  "=-=-=-=-=-=-=-=-=-=\n"
+  report << generate_list_of_times("#{file}_#{type}times.csv",percentile_targets)
+  report << "\n"
+  return report
+end
  
 def log_parser(file,percentile_targets,time)
   
+  type = ["service", "wait", "queue", "connect"]
+  
   log_processor(file, "service")
   report =  `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes\n"
-  report << "\n"
-  report <<  "Service Times\n"
-  report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  report << generate_list_of_times("#{file}_servicetimes.csv",percentile_targets)
-  report << "\n"
-  
+  report << report_generator(file, "service", percentile_targets)
   log_processor(file, "wait")
-  report << "\n"
-  report <<  "Wait Times\n"
-  report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  report << generate_list_of_times("#{file}_waittimes.csv",percentile_targets)
-  report << "\n"
-
+  report << report_generator(file, "wait", percentile_targets)
   log_processor(file, "queue")
-  report << "\n"
-  report <<  "Queue Times\n"
-  report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
-  report << "\n"
-
+  report << report_generator(file, "queue", percentile_targets)
   log_processor(file, "connect")
-  report << "\n"
-  report <<  "Connect Times\n"
-  report <<  "=-=-=-=-=-=-=-=-=-=\n"
-  report << generate_list_of_times("#{file}_queuetimes.csv",percentile_targets)
-  report << "\n"
+  report << report_generator(file, "connect", percentile_targets)
   
-  clean_up(file, ["queue", "service", "wait", "connect"]) 
+  clean_up(file, type) 
 
   # Count the number of H12's, H13's
   
