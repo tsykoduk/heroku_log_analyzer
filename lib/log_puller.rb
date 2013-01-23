@@ -22,4 +22,6 @@ end
 
 def real_time_log_pull(sudo, app)
   #todo add ablity to pull logs every minute, updating stats on the fly
+  #I want to push this to a CLI screen, or perhaps a webby type thing
+  #Not sure yet
 end
