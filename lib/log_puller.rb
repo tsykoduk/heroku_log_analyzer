@@ -18,3 +18,8 @@ def log_pull(sudo, app, time)
   `#{timeout} #{time}m #{runner_string}`
   return file_name
 end
+
+
+def real_time_log_pull(sudo, app)
+  #todo add ablity to pull logs every minute, updating stats on the fly
+end
