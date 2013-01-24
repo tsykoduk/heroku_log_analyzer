@@ -37,10 +37,10 @@ end
  
 def log_parser(file,percentile_targets,time)
   
-  type = ["service", "wait", "queue", "connect"]
-  
+  type = ["service", "wait", "queue", "connect"]  
   log_processor(file, "service")
-  report =  `cat #{file}_servicetimes.csv | wc -l`.to_i.to_s + " total requests captured" + " in " + time.to_s + " minutes\n"
+  total_requests = `cat #{file}_servicetimes.csv | wc -l`.to_i
+  report =  total_requests.to_s + " total requests captured" + " in " + time.to_s + " minutes\n" + (total_requests/time).to_s + " requests per minute\n"
   report << report_generator(file, "service", percentile_targets)
   log_processor(file, "wait")
   report << report_generator(file, "wait", percentile_targets)
