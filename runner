@@ -76,7 +76,7 @@ end
 # Build out a log run
 ##
 puts "building out the report"
-report = "Preformance Report for " + app + "\nGenerated between " + start_time + " and "+ Time.now().to_s + "\n"
+report = "Performance Report for " + app + "\nGenerated between " + start_time + " and "+ Time.now().to_s + "\n"
 report << log_parser(file_name,percentile_targets, time)
 
 ##
