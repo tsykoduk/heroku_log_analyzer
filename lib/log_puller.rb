@@ -1,4 +1,4 @@
-def log_pull(sudo, app, time)
+def log_pull(sudo, app, time,os)
   file_name = "./work/" + app + "." + Time.now().to_i.to_s + ".log"
   if sudo
     runner_string = "heroku sudo "
@@ -8,8 +8,8 @@ def log_pull(sudo, app, time)
 
   runner_string << "logs -t -a " + app + " > " + file_name 
 
-  os_version = `uname`
-  if os_version == "Darwin"
+  
+  if os == "Darwin"
     timeout = "gtimeout"
   else
     timeout = "timeout"

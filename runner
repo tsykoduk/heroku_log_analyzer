@@ -28,6 +28,7 @@ opts = Trollop::options do
   opt :app, "App Name to pull logs for.", :type => String
   opt :time, "Number of minutes to pull logs for.", :default => 5
   opt :log_file, "optional log file to proccess by hand", :type => String
+  opt :bell, "Tell you that the run is done", :default => false
 end
 
 ##
@@ -41,7 +42,8 @@ sudo = opts.sudo
 screen = opts.screen
 log_file = opts.log_file
 start_time = Time.now().to_s
-
+bell = opts.bell
+os = `uname`.chomp
 
 # check that we have a good app name and that we have access to it
 Trollop::die :app, "must exist" if app.nil?
@@ -67,7 +69,7 @@ end
 
 if log_file.nil? 
   puts "starting run"
-  file_name = log_pull(sudo, app, time)
+  file_name = log_pull(sudo, app, time, os)
 else
   file_name = log_file
 end  
@@ -90,4 +92,12 @@ else
       f << report
   end
   puts "you should find it in a file called " + file_name + ".report.txt"
+end
+
+if bell
+  if os == "Darwin"
+    `say "The report for #{app} is done"`
+  else
+    `beep`
+  end
 end
