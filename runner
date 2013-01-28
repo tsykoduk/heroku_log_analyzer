@@ -28,7 +28,7 @@ opts = Trollop::options do
   opt :app, "App Name to pull logs for.", :type => String
   opt :time, "Number of minutes to pull logs for.", :default => 5
   opt :log_file, "optional log file to proccess by hand", :type => String
-  opt :bell, "Tell you that the run is done", :default => false
+  opt :bell, "Tell you that the run is completed", :default => false
 end
 
 ##
