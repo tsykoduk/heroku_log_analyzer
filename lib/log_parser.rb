@@ -29,7 +29,7 @@ end
 def report_generator(file, type,percentile_targets)
   report = "\n"
   report <<  "#{type} times\n"
-  report <<  "\%\tms"
+  report <<  "\%\tms\n"
   report <<  "=-=-=-=-=-=-=-=-=-=\n"
   report << generate_list_of_times("#{file}_#{type}times.csv",percentile_targets)
   report << "\n"
