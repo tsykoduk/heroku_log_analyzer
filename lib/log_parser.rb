@@ -38,14 +38,14 @@ end
  
 def log_parser(file,percentile_targets,time)
   
-  #type = ["service", "wait", "queue", "connect"]  
   type = ["service", "connect"]  
   log_processor(file, "service")
   total_requests = `cat #{file}_servicetimes.csv | wc -l`.to_i
   report =  total_requests.to_s + " total requests captured" + " in " + time.to_s + " minutes\n" + (total_requests/time).to_s + " requests per minute\n"
   report << report_generator(file, "service", percentile_targets)
-  log_processor(file, "wait")
-  report << report_generator(file, "wait", percentile_targets)
+# removed wait
+#  log_processor(file, "wait")
+#  report << report_generator(file, "wait", percentile_targets)
 # Queue is not a time measure, rather a queue depth. It also almost never reports. Pulling it for the time being
 #  log_processor(file, "queue")
 #  report << report_generator(file, "queue", percentile_targets)
