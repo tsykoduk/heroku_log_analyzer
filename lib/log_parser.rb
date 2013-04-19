@@ -52,11 +52,9 @@ def log_parser(file,percentile_targets,time)
   log_processor(file, "connect")
   report << report_generator(file, "connect", percentile_targets)
   
-  clean_up(file, type) 
-
   # Count the number of H12's, H13's
   
-  heroku_errors = ["H10","H11","H12", "H13","H18","H19","H20","R10","R12","R14","R15"]
+  heroku_errors = ["H10","H11","H12","H13","H18","H19","H20","R10","R12","R14","R15"]
   heroku_error_results = []
   total_log_lines = `cat #{file} | wc -l`
   report << "\n"
@@ -66,7 +64,8 @@ def log_parser(file,percentile_targets,time)
     heroku_error_results = `grep code=#{e} #{file} |wc -l`
     report <<  e + "\t" + heroku_error_results.to_i.to_s + "\t" + ((heroku_error_results.to_f/total_log_lines.to_f)*100).to_i.to_s + "%\n"
   }
-  
   return report
-
+  
+  #clean up after run
+  clean_up(file, type) 
 end
